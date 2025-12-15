@@ -80,10 +80,10 @@
 
         default_layer {
             bindings = <
-&kp Q             &kp W         &kp E             &kp R                        &kp T                                                        &kp Y        &kp U  &lt 5 I    &kp O    &kp P
-&kp A             &kp S         &kp D             &kp F                        &kp G        &kp LS(LG(S))                    &kp MINUS      &kp H        &kp J  &kp K      &kp L    &kp ENTER
-&mt LEFT_SHIFT Z  &kp X         &kp C             &kp V                        &kp B        &kp TAB                          &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT  &kp SLASH
-&kp LCTRL         &kp LEFT_ALT  &kp LEFT_COMMAND  &lt_to_layer_0 6 LANGUAGE_4  &lt 2 SPACE  &lt_to_layer_0 3 LANGUAGE_5      &kp BACKSPACE  &lt 1 ENTER                             &kp ESCAPE
+&kp Q             &kp W         &kp E             &kp R                        &kp T                                                        &kp Y                &kp U  &lt 5 I    &kp O      &kp P
+&kp A             &kp S         &kp D             &kp F                        &kp G        &kp LS(LG(S))                    &kp MINUS      &kp H                &kp J  &kp K      &kp L      &kp ENTER
+&mt LEFT_SHIFT Z  &kp X         &kp C             &kp V                        &kp B        &kp TAB                          &kp SEMICOLON  &kp N                &kp M  &mkp LCLK  &mkp RCLK  &kp SLASH
+&kp LCTRL         &kp LEFT_ALT  &kp LEFT_COMMAND  &lt_to_layer_0 6 LANGUAGE_4  &lt 2 SPACE  &lt_to_layer_0 3 LANGUAGE_5      &kp BACKSPACE  &lt 1 LANG_HIRAGANA                               &kp ESCAPE
             >;
 
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
@@ -91,10 +91,10 @@
 
         FUNCTION {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                       &kp F1  &kp F2  &kp F3  &kp F4  &kp F5
-&trans  &trans  &trans  &trans  &trans  &trans      &kp F13  &kp F6  &kp F7  &kp F8  &kp F9  &kp F10
-&trans  &trans  &trans  &trans  &trans  &trans      &trans   &trans  &trans  &trans  &trans  &kp F11
-&trans  &trans  &trans  &trans  &trans  &trans      &trans   &trans                          &kp F12
+&kp EXCLAMATION  &kp AT_SIGN  &kp HASH  &kp DOLLAR  &kp PERCENT                       &kp CARET         &kp AMPERSAND      &kp ASTERISK   &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&trans           &trans       &trans    &trans      &trans       &trans      &kp F13  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp BACKSLASH  &kp MINUS             &kp EQUAL
+&trans           &trans       &trans    &trans      &trans       &trans      &trans   &trans            &trans             &kp COMMA      &kp PERIOD            &kp SLASH
+&trans           &trans       &trans    &trans      &trans       &trans      &trans   &trans                                                                    &kp F12
             >;
         };
 
