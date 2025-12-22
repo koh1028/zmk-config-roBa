@@ -83,7 +83,7 @@
             bindings = <
 &kp Q             &kp W         &kp E             &kp R                       &kp T                                                 &kp Y        &kp U  &lt 5 I    &kp O       &kp P
 &kp A             &kp S         &kp D             &kp F                       &kp G        &kp LS(LG(S))             &kp MINUS      &kp H        &kp J  &kp K      &kp L       &kp ENTER
-&mt LEFT_SHIFT Z  &kp X         &kp C             &kp V                       &kp B        &kp TAB                   &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp PERIOD  &mt RIGHT_SHIFT SLASH
+&mt LEFT_SHIFT Z  &kp X         &kp C             &kp V                       &kp B        &kp TAB                   &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp PERIOD  &kp SLASH
 &kp LCTRL         &kp LEFT_ALT  &kp LEFT_COMMAND  &lt_to_layer_0 6 LG(SPACE)  &lt 1 SPACE  &lt_to_layer_0 2 TAB      &kp BACKSPACE  &lt 3 SPACE                                &kp ESCAPE
             >;
 
@@ -103,7 +103,7 @@
             bindings = <
 &kp F1   &kp F2   &kp F3                &kp F4                &kp F5                       &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_0  &kp CARET
 &kp F6   &kp F7   &kp F8                &kp F9                &kp F10  &trans      &trans  &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp PLUS      &kp ASTERISK
-&kp F11  &kp F12  &kp LG(LS(NUMBER_3))  &kp LS(LG(NUMBER_4))  &trans   &trans      &trans  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp MINUS     &kp SLASH
+&kp F11  &kp F12  &kp LG(LS(NUMBER_3))  &kp LS(LG(NUMBER_4))  &trans   &trans      &trans  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp MINUS     &kp QMARK
 &trans   &trans   &trans                &trans                &trans   &trans      &trans  &trans                                                  &trans
             >;
         };
