@@ -139,8 +139,8 @@
 
         layer_6 {
             bindings = <
-&kp LG(Q)       &trans     &trans     &trans     &trans                                  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &trans
-&kp LG(A)       &trans     &kp LG(F)  &trans     &trans     &trans             &trans    &trans        &trans        &trans        &trans        &kp LG(ENTER)
+&kp LG(Q)       &kp LG(W)  &trans     &kp LG(R)  &kp LG(T)                               &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &trans
+&kp LG(A)       &kp LG(S)  &kp LG(F)  &trans     &trans     &trans             &trans    &trans        &trans        &trans        &trans        &kp LG(ENTER)
 &kp LG(Z)       &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)  &kp LG(LC(V))      &trans    &trans        &trans        &mkp LCLK     &mkp RCLK     &trans
 &kp LEFT_SHIFT  &trans     &trans     &trans     &trans     &trans             &kp LEFT  &kp RIGHT                                               &trans
             >;
