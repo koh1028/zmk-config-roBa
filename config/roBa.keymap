@@ -82,7 +82,7 @@
         default_layer {
             bindings = <
 &kp Q             &kp W         &kp E             &kp R                       &kp T                                                 &kp Y        &kp U  &lt 5 I    &kp O       &kp P
-&kp A             &kp S         &kp D             &kp F                       &kp G        &kp LS(LG(S))             &kp MINUS      &kp H        &kp J  &kp K      &kp L       &kp ENTER
+&kp A             &kp S         &kp D             &kp F                       &kp G        &kp LS(LG(S))             &kp MINUS      &kp H        &kp J  &kp K      &lt 4 L     &kp ENTER
 &mt LEFT_SHIFT Z  &kp X         &kp C             &kp V                       &kp B        &kp TAB                   &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp PERIOD  &kp SLASH
 &kp LCTRL         &kp LEFT_ALT  &kp LEFT_COMMAND  &lt_to_layer_0 6 LG(SPACE)  &lt 1 SPACE  &lt_to_layer_0 2 TAB      &kp BACKSPACE  &lt 3 SPACE                                &kp ESCAPE
             >;
@@ -121,10 +121,10 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans     &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp LCLK  &mkp RCLK  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans     &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
             >;
         };
 
@@ -140,7 +140,7 @@
         layer_6 {
             bindings = <
 &kp LG(Q)       &kp LG(W)  &trans     &kp LG(R)  &kp LG(T)                                   &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &trans
-&kp LG(A)       &kp LG(S)  &kp LG(F)  &trans     &trans         &trans             &trans    &trans        &trans        &trans        &trans        &kp LG(ENTER)
+&kp LG(A)       &kp LG(S)  &kp LG(F)  &trans     &trans         &trans             &trans    &trans        &mkp LCLK     &mkp RCLK     &trans        &kp LG(ENTER)
 &kp LG(Z)       &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)      &kp LG(LC(V))      &trans    &trans        &trans        &mkp LCLK     &mkp RCLK     &trans
 &kp LEFT_SHIFT  &trans     &trans     &trans     &kp LG(SPACE)  &trans             &kp LEFT  &kp RIGHT                                               &trans
             >;
