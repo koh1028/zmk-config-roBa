@@ -3,11 +3,25 @@
 import { useEffect, useState } from 'react'
 import { Bookmark, AccountType } from '@/types'
 
+const STORAGE_KEY = 'personal_terminal_bookmarks'
+
+function loadBookmarks(): Bookmark[] {
+  if (typeof window === 'undefined') return []
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+  } catch {
+    return []
+  }
+}
+
+function saveBookmarks(bookmarks: Bookmark[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(bookmarks))
+}
+
 interface Props { account: AccountType }
 
 export default function BookmarksWidget({ account }: Props) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([])
-  const [loading, setLoading] = useState(true)
   const [adding, setAdding] = useState(false)
   const [url, setUrl] = useState('')
   const [title, setTitle] = useState('')
@@ -15,42 +29,37 @@ export default function BookmarksWidget({ account }: Props) {
   const [filter, setFilter] = useState<'all' | AccountType>('all')
 
   useEffect(() => {
-    fetch('/api/bookmarks')
-      .then((r) => r.json())
-      .then((d) => setBookmarks(d.bookmarks || []))
-      .finally(() => setLoading(false))
+    setBookmarks(loadBookmarks())
   }, [])
 
-  const filtered = bookmarks.filter((b) =>
-    filter === 'all' || b.account === filter || b.account === 'shared'
+  const filtered = bookmarks.filter(
+    (b) => filter === 'all' || b.account === filter || b.account === 'shared'
   )
-
   const categories = Array.from(new Set(filtered.map((b) => b.category)))
 
-  async function add() {
+  function add() {
     if (!url.trim()) return
-    const res = await fetch('/api/bookmarks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url, title, category, account }),
-    })
-    const data = await res.json()
-    if (data.bookmark) {
-      setBookmarks([data.bookmark, ...bookmarks])
-      setUrl('')
-      setTitle('')
-      setCategory('')
-      setAdding(false)
+    const bookmark: Bookmark = {
+      id: Date.now().toString(),
+      title: title.trim() || url.trim(),
+      url: url.trim(),
+      category: category.trim() || 'general',
+      account,
+      createdAt: new Date().toISOString(),
     }
+    const updated = [bookmark, ...bookmarks]
+    setBookmarks(updated)
+    saveBookmarks(updated)
+    setUrl('')
+    setTitle('')
+    setCategory('')
+    setAdding(false)
   }
 
-  async function remove(id: string) {
-    await fetch('/api/bookmarks', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    })
-    setBookmarks(bookmarks.filter((b) => b.id !== id))
+  function remove(id: string) {
+    const updated = bookmarks.filter((b) => b.id !== id)
+    setBookmarks(updated)
+    saveBookmarks(updated)
   }
 
   return (
@@ -77,16 +86,15 @@ export default function BookmarksWidget({ account }: Props) {
         </div>
       </div>
       <div className="panel-body" style={{ fontSize: '12px' }}>
-        {/* Add form */}
         {adding ? (
           <div className="fade-in" style={{ marginBottom: '12px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <input
               type="text"
-              placeholder="URL"
+              placeholder="URL (例: https://github.com)"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              style={{ width: '100%' }}
               onKeyDown={(e) => e.key === 'Enter' && add()}
+              style={{ width: '100%' }}
               autoFocus
             />
             <input
@@ -98,7 +106,7 @@ export default function BookmarksWidget({ account }: Props) {
             />
             <input
               type="text"
-              placeholder="カテゴリ (省略可)"
+              placeholder="カテゴリ (例: 仕事, ツール)"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               style={{ width: '100%' }}
@@ -121,9 +129,7 @@ export default function BookmarksWidget({ account }: Props) {
           </button>
         )}
 
-        {loading && <div style={{ color: 'var(--muted)' }}><span className="blink">_</span> loading...</div>}
-
-        {!loading && filtered.length === 0 && (
+        {filtered.length === 0 && (
           <div style={{ color: 'var(--muted)', textAlign: 'center', paddingTop: '12px' }}>
             ブックマークなし
           </div>
@@ -136,41 +142,37 @@ export default function BookmarksWidget({ account }: Props) {
             </div>
             {filtered
               .filter((b) => b.category === cat)
-              .map((b) => (
-                <div
-                  key={b.id}
-                  style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px', padding: '3px 6px', background: 'var(--surface2)', borderRadius: '4px' }}
-                >
-                  <img
-                    src={`https://www.google.com/s2/favicons?domain=${new URL(b.url).hostname}&sz=16`}
-                    alt=""
-                    width={14}
-                    height={14}
-                    style={{ flexShrink: 0 }}
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                  />
-                  <a
-                    href={b.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ color: 'var(--text)', textDecoration: 'none', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                  >
-                    {b.title}
-                  </a>
-                  <span
-                    style={{ fontSize: '9px', color: b.account === 'work' ? 'var(--orange)' : 'var(--cyan)', flexShrink: 0 }}
-                  >
-                    {b.account !== 'shared' ? b.account : ''}
-                  </span>
-                  <button
-                    onClick={() => remove(b.id)}
-                    style={{ background: 'transparent', color: 'var(--border)', fontSize: '11px', padding: '0 2px', flexShrink: 0 }}
-                    title="削除"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
+              .map((b) => {
+                let hostname = ''
+                try { hostname = new URL(b.url).hostname } catch {}
+                return (
+                  <div key={b.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px', padding: '3px 6px', background: 'var(--surface2)', borderRadius: '4px' }}>
+                    {hostname && (
+                      <img
+                        src={`https://www.google.com/s2/favicons?domain=${hostname}&sz=16`}
+                        alt="" width={14} height={14}
+                        style={{ flexShrink: 0 }}
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                      />
+                    )}
+                    <a
+                      href={b.url} target="_blank" rel="noreferrer"
+                      style={{ color: 'var(--text)', textDecoration: 'none', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                    >
+                      {b.title}
+                    </a>
+                    <span style={{ fontSize: '9px', color: b.account === 'work' ? 'var(--orange)' : 'var(--cyan)', flexShrink: 0 }}>
+                      {b.account !== 'shared' ? b.account : ''}
+                    </span>
+                    <button
+                      onClick={() => remove(b.id)}
+                      style={{ background: 'transparent', color: 'var(--border)', fontSize: '11px', padding: '0 2px', flexShrink: 0 }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                )
+              })}
           </div>
         ))}
       </div>
